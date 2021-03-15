@@ -1,0 +1,35 @@
+router ospf 1
+network 2.0.0.0 255.255.255.255 area 1 - анонсируем сеть 2.0.0.0
+router bgp 100
+
+
+Восстановленные команды(по памяти):
+router bgp n // где n = const (смотреть таблицу в практике)
+3.
+ы
+neighbor 101.0.0.1 remote-as 300 // coced AS3
+
+/*
+аналогично проделываем для других роутеров
+*/
+// Посмотреть BGP таблицы и таблицы маршрутизации для ASBR1.
+show ip bgp neighbors
+show ip bgp
+
+4.
+Настроить loopback интерфейсы на маршрутизаторе AS3: 101.0.10+n.1/32 и
+101.0.11+n.1/32
+
+R1>en
+R1#conf t 
+R1(config)#interface Serial1/0
+R1(config-if)#interface loopback 0 // Включаем интерфейс loopback
+R1(config-if)#ip address 10.0.0.1 255.255.255.0 // Назначаем loopback адрес
+R1(config-if)#exit
+
+
+5.
+redistribute ospf 1
+(для внутренних и межобластных)
+redistribute ospf 1 match external 1 external 2 - для внешних 
+(Происходит перераспределение ТОЛЬКО внешних маршрутов OSPF, но как типа 1, так и типа 2.)
